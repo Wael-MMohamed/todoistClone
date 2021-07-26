@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchActiveTasks, addTask, updateTask, closeTask } from "../api/client";
+import { fetchActiveTasks, addTask, updateTask, closeTask, deleteTask } from "../api/client";
 
 const initialState = {
     todos: [],
@@ -12,18 +12,24 @@ export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
     return res;
 })
 
-export const addNewTask = createAsyncThunk('tasks/addNewTask', (newTask) => {
-    const res = addTask(newTask);
+export const addNewTask = createAsyncThunk('tasks/addNewTask', async (newTask) => {
+    const res = await addTask(newTask);
     return res;
 })
 
-export const updateTasks = createAsyncThunk('tasks/updateTasks', (updates) => {
-    updateTask(updates);
+export const updateTasks = createAsyncThunk('tasks/updateTasks', async (updates) => {
+    await updateTask(updates);
     return updates;
 })
 
-export const closeTasks = createAsyncThunk('tasks/closeTasks', (taskId) => {
-    closeTask(taskId);
+export const closeTasks = createAsyncThunk('tasks/closeTasks', async (taskId) => {
+    const res = await closeTask(taskId);
+    return res;
+})
+
+export const deleteTaskById = createAsyncThunk('tasks/deleteTaskById', async (taskId) => {
+    await deleteTask(taskId);
+    return taskId;
 })
 
 export const taskSlice = createSlice({
@@ -58,6 +64,11 @@ export const taskSlice = createSlice({
             state.status = 'succeeded';
             console.log('taskSlice action : ', action);
             state.todos.find((task) => task.id == action.payload).completed = true;
+        },
+        [deleteTaskById.fulfilled]: (state, action) => {
+            state.status = 'succeeded';
+            console.log('taskSlice delete action : ', action);
+            state.todos = state.todos.filter((item) => item.id != action.payload);
         }
     }
 })

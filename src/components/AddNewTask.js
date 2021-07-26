@@ -1,6 +1,7 @@
 import { useDispatch} from 'react-redux';
 import {addNewTask} from './taskSlice';
 import { useState} from 'react';
+import { useHistory } from 'react-router';
 
 export default function AddNewTask(){
 
@@ -10,6 +11,7 @@ export default function AddNewTask(){
     const [dueString, setDueString] = useState('tomorrow at 12:00');
     const [dueLang, setdueLang] = useState('en');
     const [priority, setPriority] = useState(1);
+    const history = useHistory();
 
     const onSavePostClicked = (e) => {
     e.preventDefault();
@@ -21,6 +23,7 @@ export default function AddNewTask(){
         "project_id": 2269074557
     }
     dispatch(addNewTask(data));
+    history.push('/');
     }
 
     return(

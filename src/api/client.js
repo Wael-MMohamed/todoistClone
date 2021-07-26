@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { deleteTaskById } from '../components/taskSlice';
 
 var config = {
     method: 'get',
     url: 'https://api.todoist.com/rest/v1/tasks?project_id=2269074557',
     headers: { 
-      'Authorization': 'Bearer be13c0b221e82aed847ef0db5389922aa7b2c067'
+      'Authorization': process.env.REACT_APP_API_TOKEN
     }
   };
 
@@ -12,7 +13,7 @@ var config = {
     method: 'POST',
     url: 'https://api.todoist.com/rest/v1/tasks',
     headers: { 
-      'Authorization': 'Bearer be13c0b221e82aed847ef0db5389922aa7b2c067', 
+      'Authorization': process.env.REACT_APP_API_TOKEN, 
       'Content-Type': 'application/json'
     },
     data : {}
@@ -52,10 +53,21 @@ export async function closeTask(taskId){
     method: 'POST',
     url: `https://api.todoist.com/rest/v1/tasks/${taskId}/close`,
     headers: { 
-      'Authorization': 'Bearer be13c0b221e82aed847ef0db5389922aa7b2c067'
+      'Authorization': process.env.REACT_APP_API_TOKEN
     }
   }
   await axios(closeConfig);
+}
+
+export async function deleteTask(taskId){
+  let deleteConfig = {
+    method: 'DELETE',
+    url: `https://api.todoist.com/rest/v1/tasks/${taskId}`,
+    headers: { 
+      'Authorization': process.env.REACT_APP_API_TOKEN
+    }
+  }
+  await axios(deleteConfig);
 }
 
 export async function addComment(newComment){
@@ -64,7 +76,7 @@ export async function addComment(newComment){
     url: 'https://api.todoist.com/rest/v1/comments',
     headers: { 
       'Content-Type': 'application/json', 
-      'Authorization': 'Bearer be13c0b221e82aed847ef0db5389922aa7b2c067'
+      'Authorization': process.env.REACT_APP_API_TOKEN
     },
     data : newComment
   };
@@ -84,7 +96,7 @@ export async function fetchComments(taskId){
     method: 'get',
     url: `https://api.todoist.com/rest/v1/comments?task_id=${taskId}`,
     headers: { 
-      'Authorization': 'Bearer be13c0b221e82aed847ef0db5389922aa7b2c067'
+      'Authorization': process.env.REACT_APP_API_TOKEN
     }
   };
   let allComments = await axios(fetchConfig).then((response) => {

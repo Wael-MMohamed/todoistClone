@@ -1,20 +1,22 @@
 import { useState, useEffect } from "react";
 import { addNewComment, fetchAllComments } from "./commentSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 export default function Comments({match}){
 
     const [commentContent, setCommentContent] = useState('');
-    const taskId = match.params.id;
+    const taskId = Number(match.params.id);
     const dispatch = useDispatch();
     const commentStatus = useSelector(state => state.comment.status);
     const commentError = useSelector(state => state.comment.error);
     const commentsList = useSelector(state => state.comment.commentList);
+    const history = useHistory();
 
     useEffect(() => {
-        dispatch(fetchAllComments(taskId));
+        if(commentStatus === 'idle') dispatch(fetchAllComments(taskId));
         // console.log('active tasks : ', tasks);
-    },[])
+    },[commentStatus,dispatch])
 
     let items
 
@@ -41,6 +43,7 @@ export default function Comments({match}){
         }
         console.log('comment ui :', newComment);
         dispatch(addNewComment(newComment));
+        history.push(`/comments/${taskId}`)
     }
 
     return (
