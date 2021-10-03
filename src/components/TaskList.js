@@ -33,18 +33,27 @@ export default function TaskList() {
     } else if (taskStatus === 'succeeded') {
 
         items = tasks.map((item) => (
-            <li key={item.id} className='list-group-item'>
-                <input className='form-check-input' type='radio' value={taskCompleted}
-                onChange={(prev) =>{
-                    prev = !prev.target.value;
-                    setTaskCompleted(prev);
-                    dispatch(closeTasks(item.id));
-                }}/>
-                {item.content}
-                <h6>{item.comment_count} comments</h6>
-                <Link to={`/EditTask/${item.id}`}><i className="fal fa-pencil"></i></Link>
-                <Link to={`/comments/${item.id}`}><i class="fal fa-comment-alt-lines"></i></Link>
-                <Link onClick={() => {
+            <li key={item.id} className='list-group-item d-flex'>
+                <div className='me-auto'>
+                    <div className='d-flex'>
+                        <input className='form-check-input m-1' type='radio' value={taskCompleted}
+                        onChange={(prev) =>{
+                            prev = !prev.target.value;
+                            setTaskCompleted(prev);
+                            dispatch(closeTasks(item.id));
+                        }}/>
+                        <div>
+                            <p className='m-0'>
+                                <h5>{item.content}</h5>
+                            </p>
+                            <small className='m-0'>{item.comment_count} comments</small>
+                        </div>
+                        
+                    </div>
+                </div>
+                <Link className='m-1' to={`/EditTask/${item.id}`} data-bs-toggle='tooltip' data-bs-placement='top' title='Edit'><i className="fal fa-pencil"></i></Link>
+                <Link className='m-1' to={`/comments/${item.id}`} data-bs-toggle='tooltip' data-bs-placement='top' title='Comments'><i class="fal fa-comment-alt-lines"></i></Link>
+                <Link className='m-1' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete' onClick={() => {
                     handleDelete(item.id);
                 }}><i class="fal fa-trash-alt"></i></Link>
             </li>
@@ -55,10 +64,10 @@ export default function TaskList() {
     
     return(
         <div>
-            <ul className='list-group'>
+            <ul className='list-group mb-3'>
                 {items}
             </ul>
-            <Link to='/addTask'><i className="fal fa-plus-circle"></i>Add Task</Link>
+            <Link className='m-3 p-2' to='/addTask'><i className="fal fa-plus-circle"></i>Add Task</Link>
         </div>
         
         

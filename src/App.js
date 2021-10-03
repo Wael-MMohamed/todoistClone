@@ -2,28 +2,26 @@ import './App.css';
 import TaskList from './components/TaskList';
 import AddNewTask from './components/AddNewTask';
 import {Route, Switch} from 'react-router-dom';
-import NavBar from './components/NavBar';
 import EditTask from './components/EditTask';
 import Comments from './components/comments/Comments';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import AddTask from './pages/AddTask';
 
 function App() {
 
   return (
     <div>
-      <NavBar />
       <div>
         <div className='row'>
-          <div  className='col-md-3'>
-            
-          </div>
           <div className='col-md-9'>
             <div className='container'>
               <Switch>
                 <Route exact path='/'>
-                  <TaskList />
+                  <Home />
                 </Route>
                 <Route exact path='/addTask'>
-                  <AddNewTask />
+                  <AddTask />
                 </Route>
                 <Route exact path='/editTask/:id' component={EditTask}>
                 </Route>
