@@ -2,10 +2,12 @@ import {useSelector, useDispatch} from 'react-redux';
 import {selectAllTasks, fetchTasks, closeTasks, deleteTaskById} from './taskSlice';
 import {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 export default function TaskList() {
     const dispatch = useDispatch();
     const tasks = useSelector(selectAllTasks);
+    const history = useHistory();
 
     const taskStatus = useSelector((state) => state.task.status);
     const error = useSelector((state) => state.task.error);
@@ -41,12 +43,14 @@ export default function TaskList() {
                             prev = !prev.target.value;
                             setTaskCompleted(prev);
                             dispatch(closeTasks(item.id));
+                            history.push('/');
                         }}/>
                         <div>
                             <p className='m-0'>
                                 <h5>{item.content}</h5>
                             </p>
-                            <small className='m-0'>{item.comment_count} comments</small>
+                            <small className='m-0' style={{paddingRight: 10}}>{item.comment_count} comments</small>
+                            <small className='m-0'>{item.due.string}</small>
                         </div>
                         
                     </div>

@@ -3,10 +3,10 @@ import { addNewComment, fetchAllComments } from "./commentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
-export default function Comments({match}){
+export default function Comments(props){
 
     const [commentContent, setCommentContent] = useState('');
-    const taskId = Number(match.params.id);
+    const taskId = Number(props.task_id);
     const dispatch = useDispatch();
     const commentStatus = useSelector(state => state.comment.status);
     const commentError = useSelector(state => state.comment.error);
@@ -48,7 +48,6 @@ export default function Comments({match}){
 
     return (
         <div>
-            <ul>{items}</ul>
             <div className="input-group mb-3">
                     <input type="text" className="form-control" placeholder='add new comment' value={commentContent} 
                     onChange={(prev) => {
@@ -58,6 +57,7 @@ export default function Comments({match}){
                     <span className="input-group-text" id="basic-addon2">Comment</span>
                     <button className='btn btn-primary' onClick={handleClick}>Save Comment</button>
             </div>
+            <ul>{items}</ul>
         </div>
     )
 }

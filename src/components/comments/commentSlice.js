@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {addComment, fetchComments } from '../../api/client';
-import Comments from "./Comments";
 
 export const addNewComment = createAsyncThunk(("comments/addNewComment"), async (newComment) => {
     let res = await addComment(newComment);
@@ -26,7 +25,7 @@ export const commentSlice = createSlice({
     extraReducers : {
         [addNewComment.fulfilled] : (state, action) => {
             state.status = 'idle';
-            let allComments = state.commentList.push(action.payload);
+            state.commentList.push(action.payload);
         },
         [fetchAllComments.pending] :  (state, action) => {
             state.status = 'loading';

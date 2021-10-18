@@ -16,15 +16,16 @@ const theme = createTheme({
         },
         MuiContainer: {
             root: {
-                marginRight: 0,
-                marginLeft: 0
+                marginTop: 80,
+                marginLeft: 240
             },
             disableGutters: true
         }
     },
     overrides: {
         MuiContainer: {
-            margin:0,
+            marginTop:80,
+            marginLeft:240,
             padding: 0
         },
         MuiTextField: {

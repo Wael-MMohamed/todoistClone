@@ -10,12 +10,12 @@ import FlagIcon from '@material-ui/icons/Flag';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
-      margin: theme.spacing(1),
+      margin: theme.spacing(3),
       width: '25ch',
     },
     button: {
         display: 'block',
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(3),
       },
       formControl: {
         margin: theme.spacing(1),

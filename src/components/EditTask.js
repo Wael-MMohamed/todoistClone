@@ -3,9 +3,9 @@ import { useState } from "react";
 import { updateTasks } from "./taskSlice";
 import { useHistory } from "react-router-dom";
 
-export default function EditTask({match}){
+export default function EditTask(props){
 
-    const taskId = match.params.id;
+    const taskId = Number(props.task_id);
     const dispach = useDispatch();
     const todoList = useSelector(state => state.task.todos);
     const taskContent = todoList.find((item) => item.id == taskId).content;

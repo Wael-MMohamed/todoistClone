@@ -24,7 +24,7 @@ export const updateTasks = createAsyncThunk('tasks/updateTasks', async (updates)
 
 export const closeTasks = createAsyncThunk('tasks/closeTasks', async (taskId) => {
     const res = await closeTask(taskId);
-    return res;
+    return taskId;
 })
 
 export const deleteTaskById = createAsyncThunk('tasks/deleteTaskById', async (taskId) => {
@@ -62,13 +62,11 @@ export const taskSlice = createSlice({
         },
         [closeTasks.fulfilled]: (state, action) => {
             state.status = 'succeeded';
-            console.log('taskSlice action : ', action);
-            state.todos.find((task) => task.id == action.payload).completed = true;
+            state.todos = state.todos.filter((task) => task.id !== action.payload);
         },
         [deleteTaskById.fulfilled]: (state, action) => {
             state.status = 'succeeded';
-            console.log('taskSlice delete action : ', action);
-            state.todos = state.todos.filter((item) => item.id != action.payload);
+            state.todos = state.todos.filter((item) => item.id !== action.payload);
         }
     }
 })
