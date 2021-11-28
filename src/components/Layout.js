@@ -7,7 +7,7 @@ import { useState } from 'react';
 import InboxIcon from '@material-ui/icons/Inbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { useHistory } from 'react-router';
-import {useSelector, useDispatch} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { findTask } from "./taskSlice";
 
 
@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Layout(){
 
     const dispatch = useDispatch();
-    const taskSearch = useSelector((state) => state.task.search);
     const classes = useStyles();
     const theme = useTheme();
     const history = useHistory();

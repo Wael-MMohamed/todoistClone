@@ -11,6 +11,7 @@ export default function Comments(props){
     const commentStatus = useSelector(state => state.comment.status);
     const commentError = useSelector(state => state.comment.error);
     const commentsList = useSelector(state => state.comment.commentList);
+    const taskSearch = useSelector((state) => state.task.search);
     const history = useHistory();
 
     useEffect(() => {
@@ -24,7 +25,7 @@ export default function Comments(props){
         items = <div className="loader">Loading...</div>
     } else if (commentStatus === 'succeeded') {
 
-        items = commentsList.filter((item) => item.task_id == taskId).map((item) => (
+        items = commentsList.filter((item) => item.task_id == taskId).filter((item) => item.content.includes(taskSearch)).map((item) => (
             <li key={item.id} className='list-group-item'>
                 {item.content}
                 {/* <Link to={`/EditTask/${item.id}`}><i className="fal fa-pencil"></i></Link>

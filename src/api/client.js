@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { deleteTaskById } from '../components/taskSlice';
+
 
 var config = {
     method: 'get',
@@ -80,7 +80,7 @@ export async function addComment(newComment){
     },
     data : newComment
   };
-  console.log('client commentconfig :' , commentConfig);
+  // console.log('client commentconfig :' , commentConfig);
   let comment = await axios(commentConfig).then((response) => {
     console.log('client addcomment response : ' , response);
     return response.data;

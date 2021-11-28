@@ -8,8 +8,8 @@ export default function EditTask(props){
     const taskId = Number(props.task_id);
     const dispach = useDispatch();
     const todoList = useSelector(state => state.task.todos);
-    const taskContent = todoList.find((item) => item.id == taskId).content;
-    const taskPriority = todoList.find((item) => item.id == taskId).priority;
+    const taskContent = todoList.find((item) => item.id === Number(taskId)).content;
+    const taskPriority = todoList.find((item) => item.id === Number(taskId)).priority;
 
     const [newContent, setNewContent] = useState('');
     const [newPriority, setNewPriority] = useState(1);
