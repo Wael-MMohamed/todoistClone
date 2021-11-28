@@ -4,6 +4,7 @@ import { fetchActiveTasks, addTask, updateTask, closeTask, deleteTask } from "..
 const initialState = {
     todos: [],
     status: 'idle',
+    search: '',
     error:null
 }
 
@@ -36,7 +37,9 @@ export const taskSlice = createSlice({
     name: "task",
     initialState,
     reducers: {
-        
+        findTask: (state, action) => {
+            state.search = action.payload;
+        }
     },
     extraReducers: {
         [fetchTasks.pending]: (state, action) => {
@@ -74,3 +77,5 @@ export const taskSlice = createSlice({
 export default taskSlice.reducer;
 
 export const selectAllTasks = (state) => state.task.todos;
+
+export const { findTask } = taskSlice.actions;

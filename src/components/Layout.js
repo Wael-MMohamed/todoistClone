@@ -7,6 +7,9 @@ import { useState } from 'react';
 import InboxIcon from '@material-ui/icons/Inbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { useHistory } from 'react-router';
+import {useSelector, useDispatch} from 'react-redux';
+import { findTask } from "./taskSlice";
+
 
 
 const drawerWidth = 240;
@@ -34,11 +37,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Layout(){
 
-
+    const dispatch = useDispatch();
+    const taskSearch = useSelector((state) => state.task.search);
     const classes = useStyles();
     const theme = useTheme();
     const history = useHistory();
     const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState('');
 
     function toggleOpen(){
         if(open){
@@ -71,6 +76,12 @@ export default function Layout(){
                         <SearchOutlinedIcon />
                     </InputAdornment>
                     ),
+                }}
+                value = {search}
+                onChange = {(word) => {
+                    word = word.target.value
+                    setSearch(word)
+                    dispatch(findTask(search))
                 }}
                 />
                 </Toolbar>

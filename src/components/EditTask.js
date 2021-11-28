@@ -24,7 +24,6 @@ export default function EditTask(props){
                 'priority' : newPriority
             }
         }
-        console.log('updates :',updates);
         dispach(updateTasks(updates));
         history.push('/');
     }

@@ -3,10 +3,16 @@ import {selectAllTasks, fetchTasks, closeTasks, deleteTaskById} from './taskSlic
 import {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
+import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+
 
 export default function TaskList() {
     const dispatch = useDispatch();
     const tasks = useSelector(selectAllTasks);
+    const taskSearch = useSelector((state) => state.task.search);
     const history = useHistory();
 
     const taskStatus = useSelector((state) => state.task.status);
@@ -23,18 +29,17 @@ export default function TaskList() {
         if(taskStatus === 'idle'){
             dispatch(fetchTasks());
             
-            console.log(completeState);
+            // console.log(completeState);
         }
-        // console.log('active tasks : ', tasks);
-    },[taskStatus,dispatch])
+    },[taskStatus,dispatch,...tasks])
 
     let items
 
     if (taskStatus === 'loading') {
         items = <div className="loader">Loading...</div>
     } else if (taskStatus === 'succeeded') {
-
-        items = tasks.map((item) => (
+        let data = taskSearch === '' ? tasks : tasks.filter(item => item.content.includes(taskSearch));
+        items = data.map((item) => (
             <li key={item.id} className='list-group-item d-flex'>
                 <div className='me-auto'>
                     <div className='d-flex'>
@@ -55,11 +60,11 @@ export default function TaskList() {
                         
                     </div>
                 </div>
-                <Link className='m-1' to={`/EditTask/${item.id}`} data-bs-toggle='tooltip' data-bs-placement='top' title='Edit'><i className="fal fa-pencil"></i></Link>
-                <Link className='m-1' to={`/comments/${item.id}`} data-bs-toggle='tooltip' data-bs-placement='top' title='Comments'><i class="fal fa-comment-alt-lines"></i></Link>
-                <Link className='m-1' data-bs-toggle='tooltip' data-bs-placement='top' title='Delete' onClick={() => {
+                <Link className='m-1' style={{ color: 'black'}} to={`/EditTask/${item.id}`} data-bs-toggle='tooltip' data-bs-placement='top' title='Edit'><CreateOutlinedIcon /></Link>
+                <Link className='m-1' style={{ color: 'black'}} to={`/comments/${item.id}`} data-bs-toggle='tooltip' data-bs-placement='top' title='Comments'><MessageOutlinedIcon /></Link>
+                <Link className='m-1' style={{ color: 'black'}} data-bs-toggle='tooltip' data-bs-placement='top' title='Delete' onClick={() => {
                     handleDelete(item.id);
-                }}><i class="fal fa-trash-alt"></i></Link>
+                }}><DeleteOutlineSharpIcon /></Link>
             </li>
         ))
     } else if (taskStatus === 'error') {
@@ -71,7 +76,7 @@ export default function TaskList() {
             <ul className='list-group mb-3'>
                 {items}
             </ul>
-            <Link className='m-3 p-2' to='/addTask'><i className="fal fa-plus-circle"></i>Add Task</Link>
+            <Link className='m-3 p-2' style={{textDecoration: 'none'}} to='/addTask'><AddCircleOutlineOutlinedIcon /> Add Task</Link>
         </div>
         
         
